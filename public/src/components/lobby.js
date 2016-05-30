@@ -5,22 +5,25 @@ import Chat from './chat'
 let d = React.DOM
 
 export default React.createClass({
+  componentWillMount() {
+    App.state.chat = true
+  },
   componentDidMount() {
     App.send('join', 'lobby')
   },
   render() {
-    return d.div({},
-      Chat(),
-      d.h1({}, 'drafts.ninja'),
-      d.p({}, `${App.state.numPlayers} ${App.state.numPlayers === 1 ? 'player' : 'players'}
-               playing ${App.state.numActiveGames} ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
-      d.p({ className: 'error' }, App.err),
-      Create(),
-      d.footer({},
-        d.div({},
-          d.a({ className: 'icon ion-social-github', href: 'https://github.com/arxanas/draft' })),
-        d.div({},
-          d.small({}, 'unaffiliated with wizards of the coast'))))
+    return d.div({ className: 'container' },
+      d.div({ className: 'lobby' },
+        d.header({},
+          d.h1({ className: 'lobby-header' },
+            d.span({}, 'drafts'),
+            d.span({ className: 'spacer-dot' }),
+            d.span({}, 'ninja'))),
+        d.p({}, `${App.state.numPlayers} ${App.state.numPlayers === 1 ? 'player' : 'players'}
+                 playing ${App.state.numActiveGames} ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
+        d.p({ className: 'error' }, App.err),
+        Create()),
+      Chat())
   }
 })
 
@@ -78,16 +81,24 @@ function Create() {
 
   let types = ['draft', 'sealed', 'cube draft', 'cube sealed', 'chaos']
     .map(type =>
-      d.button({
-        disabled: type === App.state.type,
-        onClick: App._save('type', type)
-      }, type))
+      d.label({
+        className: 'radio-label connected-component',
+      }, d.input({
+        className: 'radio-input connected-component',
+        name: 'draft-type',
+        type: 'radio',
+        value: type,
+        onChange: e => App.save('type', e.currentTarget.value),
+        checked: App.state.type === type,
+      }), type))
 
-  return d.div({},
-    d.div({},
-      d.button({ onClick: App._emit('create') }, 'create'),
-      ' room for ',
+  return d.fieldset({ className: 'fieldset' },
+    d.legend({ className: 'legend' }, 'Create a room'),
+    d.p({},
+      'Number of players: ',
       d.select({ valueLink: App.link('seats') }, seats)),
-    d.div({}, types),
-    content())
+    d.div({},
+      d.p({}, 'Game type: ', d.span({ className: 'connected-container' }, types)),
+      d.div({}, content())),
+    d.p({}, d.button({ onClick: App._emit('create') }, 'Create room')))
 }

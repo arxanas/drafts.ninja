@@ -30,6 +30,9 @@ function zone(zoneName) {
       })))
 
   return d.div({ className: 'zone' },
-    d.h1({}, `${zoneName} ${cards.length}`),
+    d.h1({},
+      d.span({}, zoneName),
+      d.span({ className: 'spacer-dot' }),
+      d.span({}, `${cards.length} ${cards.length === 1 ? 'card' : 'cards' }`)),
     items)
 }

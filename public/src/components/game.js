@@ -4,7 +4,8 @@ import {Zones} from '../cards'
 import Chat from './chat'
 import Cols from './cols'
 import Grid from './grid'
-import Settings from './settings'
+import DeckSettings from './deck-settings'
+import GameSettings from './game-settings'
 import {LBox} from './checkbox'
 let d = React.DOM
 
@@ -28,18 +29,15 @@ export default React.createClass({
     App.send('join', id)
   },
   render() {
-    let {chat} = App.state
-    if (chat)
-      let className = 'chat'
-
-    return d.div({ className },
-      Chat({ hidden: !chat }),
+    return d.div({ className: 'container' },
       d.audio({ id: 'beep', src: '/media/beep.wav' }),
-      Settings(),
-      this.Start(),
-      d.div({}, App.state.title),
-      this.Players(),
-      this.Cards())
+      d.div({ className: 'game' },
+        d.div({ className: 'game-controls' },
+          d.div({ className: 'game-status' }, this.Players(), this.Start()),
+          DeckSettings(),
+          GameSettings()),
+        this.Cards()),
+      Chat())
   },
 
   Cards() {
@@ -50,19 +48,33 @@ export default React.createClass({
     return [pack, pool]
   },
   Start() {
-    if (App.state.round || !App.state.isHost)
+    if (App.state.didGameStart || !App.state.isHost)
       return
 
-    let readyToStart = App.state.players.every(x => x.isReadyToStart)
+    let numNotReady = App.state.players.filter(x => !x.isReadyToStart).length
+    let readyToStart = (numNotReady === 0)
     let startButton
       = readyToStart
-      ? d.button({ onClick: App._emit('start') }, 'start')
-      : d.button({ disabled: true, title: READY_TITLE_TEXT }, 'start')
+      ? d.button({ onClick: App._emit('start') }, 'Start game')
+      : d.button({ disabled: true, title: READY_TITLE_TEXT }, 'Start game')
 
-    return d.div({},
-      d.div({}, startButton),
+    let readyReminderText = ''
+    if (!readyToStart) {
+      let players = (numNotReady === 1 ? 'player' : 'players')
+      readyReminderText =
+        d.span({ style: { marginLeft: '5px' } },
+          `Waiting for ${numNotReady} ${players} to become ready...`)
+    }
+
+    let startControls = d.div({},
+      d.div({}, `Format: ${App.state.title}`),
       LBox('bots', 'bots'),
-      LBox('timer', 'timer'))
+      LBox('timer', 'timer'),
+      d.div({}, startButton, readyReminderText))
+
+    return d.fieldset({ className: 'start-controls fieldset' },
+      d.legend({ className: 'legend game-legend' }, 'Start game'),
+      d.span({}, startControls))
   },
   Players() {
     let rows = App.state.players.map(row)
@@ -76,15 +88,19 @@ export default React.createClass({
       d.th({}, 'mws'),
     ]
 
-    if (!App.state.round)
+    if (!App.state.didGameStart)
       columns.push(d.th({ title: READY_TITLE_TEXT }, 'ready'))
 
     if (App.state.isHost)
       columns.push(d.th({})) // kick
 
-    return d.table({ id: 'players' },
+    let playersTable = d.table({ id: 'players' },
       d.tr({}, ...columns),
       rows)
+
+    return d.fieldset({ className: 'fieldset' },
+      d.legend({ className: 'legend game-legend' }, 'Players'),
+      playersTable)
   }
 })
 
@@ -136,7 +152,7 @@ function row(p, i) {
     d.td({}, p.hash && p.hash.mws),
   ]
 
-  if (!App.state.round)
+  if (!App.state.didGameStart)
     columns.push(d.td({
       className: 'ready',
       title: READY_TITLE_TEXT

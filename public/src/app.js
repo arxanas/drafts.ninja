@@ -41,6 +41,14 @@ let App = {
     filetype: 'txt',
     side: false,
     sort: 'color',
+
+    get didGameStart() {
+      // both round === 0 and round is undefined
+      return App.state.round
+    },
+    get isGameFinished() {
+      return App.state.round === -1
+    },
   },
 
   init(router) {

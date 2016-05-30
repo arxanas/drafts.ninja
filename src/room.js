@@ -2,7 +2,7 @@ var {EventEmitter} = require('events')
 
 module.exports = class extends EventEmitter {
   constructor() {
-    this.messages = Array(15)
+    this.messages = Array(50)
     this.socks = []
   }
   join(sock) {

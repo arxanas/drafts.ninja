@@ -1,3 +1,21 @@
+/*** Basic styles ***/
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background-color: #fafafa;
+  font-family: 'Helvetica';
+  font-size: 16px;
+}
+
+h1 {
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  text-transform: uppercase;
+}
+
 footer {
   position: fixed;
   bottom: 0;
@@ -8,7 +26,7 @@ label {
 }
 
 textarea {
-  height: 1em;
+  height: 16.5px; /* same as input[type=text] */
   vertical-align: top;
 }
 
@@ -16,28 +34,195 @@ time {
   color: #999;
 }
 
-.icon {
-  font-size: 32px;
-  margin: 16px;
+/** Fieldsets and forms **/
+
+.fieldset {
+  background-color: #eaeaea;
+  border-radius: 3px;
+  border: solid #ccc 1px;
+  line-height: 20px;
+  padding: 10px;
+}
+
+.legend {
+  background-color: #eaeaea;
+  border: solid #ccc 1px;
+  box-shadow: 0 1px 1px 0 #ccc;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 3px 5px;
+}
+
+input[type=button], button, input[type=text], textarea, select {
+  font-size: 16px;
+  line-height: 16px;
+  padding: 3px;
+}
+
+input[type=button], button, input[type=text], textarea {
+  border: solid #d0d0d0 1px;
+}
+
+input[type=button], button {
+  background-color: #f0f0f0;
+}
+
+input[type=button]:hover, button:hover, input[type=text]:hover, textarea:hover {
+  border-color: #909090;
+}
+
+input[type=button]:active, button:active {
+  box-shadow: 0 0 1px 0 black inset;
+}
+
+input[type=button]:disabled, button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+input[type=button]:disabled:hover, button:disabled:hover {
+  border: solid #ccc 1px;
+}
+
+input[type=button]:disabled:active, button:disabled:active {
+  box-shadow: none;
+}
+
+.radio-label {
+  display: inline-block;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border: solid #d0d0d0 1px;
+}
+
+.radio-input {
+  margin-left: 2px;
+  margin-right: 5px;
+}
+
+.radio-label:hover {
+  border-color: #909090;
+}
+
+.radio-label:active {
+  box-shadow: 0 0 1px 0 black inset;
+}
+
+/** Container of inputs that share a border. **/
+
+.connected-container {
+  position: relative;
+  z-index: 0;
+}
+
+.connected-component {
+  position: relative;
+  z-index: 1;
+}
+
+.connected-component:not(:first-child) {
+  margin-left: -1px;
+}
+
+.connected-component:hover {
+  z-index: 2;
+}
+
+/*** Main page components ***/
+
+.container {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 30px 0 30px 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+/** Lobby **/
+
+.lobby {
+  flex-grow: 1;
+  margin: 0 auto;
+  padding-right: 30px;
+}
+
+.lobby-header {
+  font-size: 40px;
+  height: 40px;
+}
+
+.spacer-dot:after {
+  content: "\00b7";
+  display: inline-block;
+  width: 25px;
+  text-align: center;
+}
+
+/** Chat **/
+
+.chat-container {
+  height: 100%;
+  position: relative;
+  min-width: 25%;
+}
+
+.chat-container-hidden {
+  display: none;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  width: 0;
 }
 
 .chat {
-  margin-right: 351px;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 25%;
 }
 
-.name {
-  color: #393;
+.messages {
+  background-color: #fafafa;
+  flex-grow: 1;
+  height: 100%;
+  overflow: auto;
+  padding: 5px;
 }
 
-.colorless  { background-color: rgba(  0,   0,   0, .1); }
-.red        { background-color: rgba(255,   0,   0, .1); }
-.green      { background-color: rgba(  0, 255,   0, .1); }
-.blue       { background-color: rgba(  0,   0, 255, .1); }
-.multicolor { background-color: rgba(255, 255,   0, .1); }
-.black {
-  background-color: black;
-  color: white;
+.chat-input {
+  margin-left: -1px;
+  width: 100%;
 }
+
+/** Zones **/
+
+.zone img, #img, .card {
+  height: 340px;
+  width: 240px;
+  cursor: pointer;
+}
+
+.col {
+  float: left;
+  width: 180px;
+}
+
+.col img {
+  height: 255px;
+  width: 180px;
+  margin-bottom: -235px;
+}
+
+.col div:last-child img {
+  margin-bottom: 0;
+}
+
+/** Card styles **/
 
 .card {
   display: inline-block;
@@ -57,7 +242,6 @@ time {
   left: 0;
   right: 0;
 
-  margin-bottom: 5px;
   border-radius: 12px;
 
   background: rgba(200, 200, 200, 0.25);
@@ -80,7 +264,18 @@ time {
   font-size: 13px;
   font-weight: 700;
   text-align: center;
-  text-shadow: 0px 0px 2px #000;
+  text-shadow: 0 0 2px #000;
+}
+
+/** Misc **/
+
+.icon {
+  font-size: 32px;
+  margin: 16px;
+}
+
+.name {
+  color: #393;
 }
 
 .error {
@@ -88,33 +283,14 @@ time {
 }
 
 .zone {
-  border-top: 1px solid black;
+  border-top: solid #ccc 1px;
   clear: both;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
 }
 
-.zone img, #img {
-  height: 340px;
-  width: 240px;
-  cursor: pointer;
-}
-
-.col {
-  float: left;
-  width: 180px;
-}
-
-.col img {
-  height: 255px;
-  width: 180px;
-  margin-bottom: -235px;
-}
-
-.col div:last-child img {
-  margin-bottom: 0;
-}
+/** Players **/
 
 .self {
   background-color: rgba(0, 255, 0, .1);
@@ -128,7 +304,7 @@ time {
   height: 10px;
   width: 10px;
   border-radius: 10px;
-  border-style: solid 1px #000;
+  border-style: solid black 1px;
 }
 
 .icon-connected {
@@ -162,50 +338,64 @@ time {
   padding-right: .5em;
 }
 
-#settings {
-  float: right;
-  text-align: right;
+.game {
+  flex-grow: 1;
+  padding-right: 30px;
 }
 
-#settings table {
-  margin-left: auto;
+.game-controls {
+  display: flex;
+  margin-bottom: 30px;
 }
 
-#settings table input {
-  width: 3em;
+.game .fieldset {
+  display: flex;
 }
 
-#settings tr:first-of-type {
-  text-align: left;
+.game-legend {
+  font-size: 15px;
+  font-weight: normal;
 }
 
-#settings img {
+.game-status, .deck-settings {
+  margin-right: 30px;
+}
+
+.game-settings {
+  flex-shrink: 0;
+}
+
+.num-lands {
+  width: 50px;
+}
+
+.deck-settings tr:first-of-type {
+  text-align: center;
+}
+
+.land-suggest-button {
+  width: 100%;
+}
+
+.deck-settings img {
   height: 32px;
   width:  32px;
 }
 
-#chat {
-  border-left: 1px solid black;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 350px;
+.start-controls, .download-controls {
+  margin-top: 5px;
+  padding-top: 5px;
+}
 
-  display: flex;
+.download-controls {
   flex-direction: column;
+  text-align: left;
 }
 
-#chat[hidden] {
-  /* flexbox breaks the hidden attribute? */
-  display: none;
+.download-filename {
+  width: 100px;
 }
 
-#messages {
-  overflow: auto;
-  flex-grow: 1;
-}
-
-#chat input {
-  flex-shrink: 0
+.copy-controls {
+  margin-top: 3px;
 }

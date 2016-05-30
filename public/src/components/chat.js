@@ -19,11 +19,11 @@ export default React.createClass({
   },
   render() {
     // must be mounted to receive messages
-    let {hidden} = this.props
-    return d.div({ hidden, id: 'chat' },
-      d.div({ id: 'messages', ref: 'messages'},
-        this.state.messages.map(this.Message)),
-      this.Entry())
+    return d.div({ className: `chat-container ${App.state.chat ? '' : 'chat-container-hidden'}` },
+      d.div({ className: 'chat' },
+        d.div({ className: 'messages', ref: 'messages'},
+          this.state.messages.map(this.Message)),
+        this.Entry()))
   },
 
   hear(msg) {
@@ -54,6 +54,8 @@ export default React.createClass({
 
   Entry() {
     return d.input({
+      className: 'chat-input',
+      type: 'text',
       ref: 'entry',
       onKeyDown: this.key,
       placeholder: '/nick name'
