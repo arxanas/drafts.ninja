@@ -18,6 +18,10 @@ module.exports = class extends EventEmitter {
     })
     this.attach(sock)
   }
+  get isActive() {
+    // Note that a player can be transmuted into a bot when they are kicked.
+    return this.isConnected && !this.isBot
+  }
   attach(sock) {
     if (this.sock && this.sock !== sock)
       this.sock.ws.close()

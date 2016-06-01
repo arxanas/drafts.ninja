@@ -3,9 +3,9 @@ var {EventEmitter} = require('events')
 // All sockets currently connected to the server.
 let allSocks = []
 
-function broadcastNumPlayers() {
+function broadcastNumUsers() {
   console.log(`there are now ${allSocks.length} connected users`)
-  Sock.broadcast('set', { numPlayers: allSocks.length })
+  Sock.broadcast('set', { numUsers: allSocks.length })
 }
 
 function message(msg) {
@@ -36,7 +36,7 @@ class Sock extends EventEmitter {
       this[key] = mixins[key].bind(this)
 
     allSocks.push(this)
-    broadcastNumPlayers()
+    broadcastNumUsers()
     ws.on('message', message.bind(this))
     ws.on('close', this.exit)
 
@@ -46,7 +46,7 @@ class Sock extends EventEmitter {
       let index = allSocks.indexOf(sock)
       if (index !== -1) {
         allSocks.splice(index, 1)
-        broadcastNumPlayers()
+        broadcastNumUsers()
       }
     })
   }

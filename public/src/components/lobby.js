@@ -19,8 +19,14 @@ export default React.createClass({
             d.span({}, 'drafts'),
             d.span({ className: 'spacer-dot' }),
             d.span({}, 'ninja'))),
-        d.p({}, `${App.state.numPlayers} ${App.state.numPlayers === 1 ? 'player' : 'players'}
-                 playing ${App.state.numActiveGames} ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
+        d.p({}, `${App.state.numUsers}
+                 ${App.state.numUsers === 1 ? 'user' : 'users'}
+                 connected;
+                 ${App.state.numPlayers}
+                 ${App.state.numPlayers === 1 ? 'player' : 'players'}
+                 playing
+                 ${App.state.numActiveGames}
+                 ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
         d.p({ className: 'error' }, App.err),
         Create()),
       Chat())

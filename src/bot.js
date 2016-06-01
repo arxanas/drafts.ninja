@@ -11,6 +11,9 @@ module.exports = class extends EventEmitter {
       time: 0,
     })
   }
+  get isActive() {
+    return false
+  }
   getPack(pack) {
     var score = 99
     var index = 0

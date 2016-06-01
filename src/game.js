@@ -72,7 +72,7 @@ module.exports = class Game extends Room {
   }
 
   get isActive() {
-    return this.players.some(x => x.isConnected && !x.isBot)
+    return this.players.some(x => x.isActive)
   }
 
   // The number of total games. This includes ones that have been long since
@@ -91,12 +91,24 @@ module.exports = class Game extends Room {
     return count
   }
 
+  // The number of players in active games.
+  static totalNumPlayers() {
+    let count = 0
+    for (let id of Object.keys(games)) {
+      if (games[id].isActive) {
+        count += games[id].players.filter(x => x.isConnected && !x.isBot).length
+      }
+    }
+    return count
+  }
+
   static broadcastGameInfo() {
     Sock.broadcast('set', {
+      numPlayers: Game.totalNumPlayers(),
       numGames: Game.numGames(),
       numActiveGames: Game.numActiveGames(),
     })
-    console.log(`there are now ${Game.numGames()} games, ${Game.numActiveGames()} active`)
+    console.log(`there are now ${Game.totalNumPlayers()} total players in ${Game.numGames()} games, ${Game.numActiveGames()} active`)
   }
 
   name(name, sock) {

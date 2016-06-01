@@ -13,6 +13,7 @@ let App = {
     id: null,
     name: 'ninja',
 
+    numUsers: 0,
     numPlayers: 0,
     numActiveGames: 0,
 
