@@ -29,7 +29,13 @@ export default React.createClass({
                  ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
         d.p({ className: 'error' }, App.err),
         Motd(),
-        Create()),
+        Create(),
+        d.footer({},
+          'drafts.ninja is a fork of the ',
+          d.code({}, 'draft'),
+          ' project by aeosynth. Contributions welcome! ',
+          d.a({ href: 'https://github.com/arxanas/drafts.ninja' },
+            'https://github.com/arxanas/drafts.ninja'))),
       Chat())
   }
 })
