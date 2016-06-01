@@ -159,6 +159,10 @@ input[type=button]:disabled:active, button:disabled:active {
   text-align: center;
 }
 
+.lobby .fieldset:not(:last-child) {
+  margin-bottom: 30px;
+}
+
 /** Chat **/
 
 .chat-container {

@@ -28,6 +28,7 @@ export default React.createClass({
                  ${App.state.numActiveGames}
                  ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
         d.p({ className: 'error' }, App.err),
+        Motd(),
         Create()),
       Chat())
   }
@@ -79,6 +80,13 @@ function content() {
     case 'cube sealed': return cube
     case 'chaos': return chaos
   }
+}
+
+function Motd() {
+  if (App.state.motd)
+    return d.fieldset({ className: 'fieldset' },
+      d.legend({ className: 'legend' }, 'News'),
+      d.div({ dangerouslySetInnerHTML: { '__html': App.state.motd } }))
 }
 
 function Create() {

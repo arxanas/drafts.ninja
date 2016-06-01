@@ -4,6 +4,7 @@ all: install clean cards score js
 node := ${CURDIR}/node_modules
 all_sets := ${CURDIR}/data/AllSets.json
 traceur := ${node}/.bin/traceur
+config := config.js
 
 ${traceur}: install
 
@@ -33,8 +34,12 @@ ${all_sets}:
 score:
 	-node src/make score #ignore errors
 
-js: ${traceur} ${all_sets}
+js: ${traceur} ${all_sets} ${config}
 	${traceur} --out public/lib/app.js public/src/init.js
+
+# "order-only" prerequisite
+${config}: | ${config}.default
+	cp $| $@
 
 run: js
 	node run

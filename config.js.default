@@ -1,0 +1,4 @@
+module.exports = {
+  PORT: 1337,
+  MOTD: null, // message of the day
+}
