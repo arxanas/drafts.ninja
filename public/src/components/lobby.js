@@ -138,7 +138,7 @@ function Create() {
 function Join() {
   let header = d.tr({},
       d.th({}, 'Name'),
-      d.th({}, 'Time created'),
+      // d.th({}, 'Time created'), // TODO
       d.th({}, 'Format'),
       d.th({}, 'Seats'),
       d.th({}, ''))
@@ -147,7 +147,7 @@ function Join() {
   for (let roomInfo of App.state.roomInfo) {
     rows.push(d.tr({},
       d.td({}, roomInfo.title),
-      d.td({}, 'TODO'), // NOCOMMIT
+      // d.td({}, 'TODO') // TODO
       d.td({}, roomInfo.format),
       d.td({}, `${roomInfo.usedSeats}/${roomInfo.totalSeats}`),
       d.td({},
