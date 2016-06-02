@@ -29,9 +29,9 @@ export default React.createClass({
                  ${App.state.numActiveGames}
                  ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
         d.p({ className: 'error' }, App.err),
-        Motd(),
         Create(),
         Join(),
+        Motd(),
         d.div({},
           d.strong({}, 'drafts.ninja'),
           ' is a fork of the ',
