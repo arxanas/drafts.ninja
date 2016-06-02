@@ -111,9 +111,9 @@ let events = {
       document.getElementById('beep').play()
   },
   create() {
-    let {type, seats} = App.state
+    let {type, seats, title, isPrivate} = App.state
     seats = Number(seats)
-    let options = { type, seats }
+    let options = { type, seats, title, isPrivate }
 
     if (/cube/.test(type))
       options.cube = cube()

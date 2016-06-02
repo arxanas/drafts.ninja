@@ -16,8 +16,11 @@ let App = {
     numUsers: 0,
     numPlayers: 0,
     numActiveGames: 0,
+    roomInfo: [],
 
     seats: 8,
+    title: '',
+    isPrivate: false,
     type: 'draft',
     sets: [
       'SOI',

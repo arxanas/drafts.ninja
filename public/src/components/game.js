@@ -67,7 +67,7 @@ export default React.createClass({
     }
 
     let startControls = d.div({},
-      d.div({}, `Format: ${App.state.title}`),
+      d.div({}, `Format: ${App.state.format}`),
       LBox('bots', 'bots'),
       LBox('timer', 'timer'),
       d.div({}, startButton, readyReminderText))

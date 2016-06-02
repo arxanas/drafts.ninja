@@ -111,7 +111,7 @@ input[type=button]:disabled:active, button:disabled:active {
 
 /** Container of inputs that share a border. **/
 
-.connected-container {
+.connected-container, .connected-column {
   position: relative;
   z-index: 0;
 }
@@ -121,8 +121,12 @@ input[type=button]:disabled:active, button:disabled:active {
   z-index: 1;
 }
 
-.connected-component:not(:first-child) {
+.connected-container .connected-component:not(:first-child) {
   margin-left: -1px;
+}
+
+.connected-column .connected-component:not(:first-child) {
+  margin-top: -1px;
 }
 
 .connected-component:hover {
@@ -202,6 +206,27 @@ input[type=button]:disabled:active, button:disabled:active {
 .chat-input {
   margin-left: -1px;
   width: 100%;
+}
+
+/*** Join rooms ***/
+
+.join-room-table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+.join-room-table th, .join-room-table td {
+  padding: 5px;
+}
+
+.join-room-table tbody tr {
+  background-color: #f0f0f0;
+  border: solid #d0d0d0 1px;
+}
+
+.join-room-link:after {
+  content: '\00bb';
 }
 
 /** Zones **/

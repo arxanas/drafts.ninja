@@ -2,6 +2,7 @@ import _ from '../../lib/utils'
 import App from '../app'
 import data from '../data'
 import Chat from './chat'
+import {RBox} from './checkbox'
 let d = React.DOM
 
 export default React.createClass({
@@ -30,6 +31,7 @@ export default React.createClass({
         d.p({ className: 'error' }, App.err),
         Motd(),
         Create(),
+        Join(),
         d.div({},
           d.strong({}, 'drafts.ninja'),
           ' is a fork of the ',
@@ -115,11 +117,54 @@ function Create() {
 
   return d.fieldset({ className: 'fieldset' },
     d.legend({ className: 'legend' }, 'Create a room'),
-    d.p({},
+    d.div({},
+      d.label({},
+        'Game title: ',
+        d.input({
+          type: 'text',
+          valueLink: App.link('title'),
+        }))),
+    d.div({},
       'Number of players: ',
       d.select({ valueLink: App.link('seats') }, seats)),
+    d.div({},
+      RBox('isPrivate', 'Make room private: ')),
     d.div({},
       d.p({}, 'Game type: ', d.span({ className: 'connected-container' }, types)),
       d.div({}, content())),
     d.p({}, d.button({ onClick: App._emit('create') }, 'Create room')))
+}
+
+function Join() {
+  let header = d.tr({},
+      d.th({}, 'Name'),
+      d.th({}, 'Time created'),
+      d.th({}, 'Format'),
+      d.th({}, 'Seats'),
+      d.th({}, ''))
+
+  let rows = []
+  for (let roomInfo of App.state.roomInfo) {
+    rows.push(d.tr({},
+      d.td({}, roomInfo.title),
+      d.td({}, 'TODO'), // NOCOMMIT
+      d.td({}, roomInfo.format),
+      d.td({}, `${roomInfo.usedSeats}/${roomInfo.totalSeats}`),
+      d.td({},
+        d.a({
+          href: `#g/${roomInfo.id}`,
+          className: 'join-room-link'
+        }, 'Join room'))));
+  }
+
+  let table =
+    rows.length
+    ? d.table({ className: 'join-room-table' },
+        d.thead({}, header),
+        d.tbody({}, rows))
+    : 'There are no rooms currently open.'
+
+  return d.fieldset({ className: 'fieldset' },
+    d.legend({ className: 'legend' }, 'Join a room'),
+      table)
 }

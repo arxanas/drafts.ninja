@@ -5,7 +5,7 @@ var Sock = require('./sock')
 var util = require('./util')
 
 var rooms = {
-  lobby: new Room
+  lobby: new Room({isPrivate: true})
 }
 
 function create(opts) {

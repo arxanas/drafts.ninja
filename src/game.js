@@ -33,26 +33,27 @@ let games = {}
 })()
 
 module.exports = class Game extends Room {
-  constructor({id, seats, type, sets, cube}) {
-    super()
+  constructor({id, title, seats, type, sets, cube, isPrivate}) {
+    super({isPrivate})
 
-    if (sets)
+    if (sets) {
       if (type != 'chaos') {
         Object.assign(this, {
           sets,
-          title: sets.join(' / ')
+          format: sets.join(' / ')
         })
       } else {
-        title: 'CHAOS!'
-      } else {
-      var title = type
+        this.format = 'CHAOS!'
+      }
+    } else {
+      let format = type
       if (type === 'cube draft')
-        title += ' ' + cube.packs + 'x' + cube.cards
-      Object.assign(this, { cube, title })
+        format += ' ' + cube.packs + 'x' + cube.cards
+      Object.assign(this, { cube, format })
     }
 
     var gameID = _.id()
-    Object.assign(this, { seats, type,
+    Object.assign(this, { title, seats, type,
       delta: -1,
       hostID: id,
       id: gameID,
@@ -73,6 +74,18 @@ module.exports = class Game extends Room {
 
   get isActive() {
     return this.players.some(x => x.isActive)
+  }
+
+  get didGameStart() {
+    return this.round !== 0
+  }
+
+  get isGameFinished() {
+    return this.round === -1
+  }
+
+  get isGameInProgress() {
+    return this.didGameStart && !this.isGameFinished
   }
 
   // The number of total games. This includes ones that have been long since
@@ -108,7 +121,33 @@ module.exports = class Game extends Room {
       numGames: Game.numGames(),
       numActiveGames: Game.numActiveGames(),
     })
+    Game.broadcastRoomInfo()
     console.log(`there are now ${Game.totalNumPlayers()} total players in ${Game.numGames()} games, ${Game.numActiveGames()} active`)
+  }
+
+  static broadcastRoomInfo() {
+    let roomInfo = []
+    for (let id of Object.keys(games)) {
+      let game = games[id]
+      if (game.isPrivate || game.didGameStart || !game.isActive)
+        continue
+
+      let usedSeats = game.players.length
+      let totalSeats = game.seats
+      if (usedSeats === totalSeats)
+        continue
+
+      roomInfo.push({
+        id: game.id,
+        title: game.title,
+        usedSeats,
+        totalSeats,
+        name: game.name,
+        format: game.format,
+        timeCreated: game.timeCreated,
+      })
+    }
+    Sock.broadcast('set', { roomInfo: roomInfo })
   }
 
   name(name, sock) {
@@ -130,8 +169,8 @@ module.exports = class Game extends Room {
       }
     }
 
-    if (this.round)
-      return sock.err('game started')
+    if (this.didGameStart)
+      return sock.err('game already started')
 
     super(sock)
 
@@ -152,7 +191,7 @@ module.exports = class Game extends Room {
     if (!h || h.isBot)
       return
 
-    if (this.round)
+    if (this.didGameStart)
       h.kick()
     else
       h.exit()
@@ -167,7 +206,7 @@ module.exports = class Game extends Room {
       isHost: h.isHost,
       round: this.round,
       self: this.players.indexOf(h),
-      title: this.title
+      format: this.format,
     })
   }
 
@@ -177,7 +216,7 @@ module.exports = class Game extends Room {
   }
 
   exit(sock) {
-    if (this.round)
+    if (this.didGameStart)
       return
 
     sock.removeAllListeners('start')
@@ -205,7 +244,7 @@ module.exports = class Game extends Room {
   }
 
   kill(msg) {
-    if (this.round > -1)
+    if (!this.isGameFinished)
       this.players.forEach(p => p.err(msg))
 
     delete games[this.id]
@@ -286,6 +325,7 @@ module.exports = class Game extends Room {
         p.send('pool', p.pool)
         p.send('set', { round: -1 })
       }
+      Game.broadcastGameInfo()
       return
     }
 

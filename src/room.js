@@ -1,9 +1,12 @@
-var {EventEmitter} = require('events')
+let {EventEmitter} = require('events')
+let Sock = require('./sock')
 
 module.exports = class extends EventEmitter {
-  constructor() {
+  constructor({isPrivate}) {
     this.messages = Array(50)
     this.socks = []
+    this.isPrivate = isPrivate
+    this.timeCreated = new Date
   }
   join(sock) {
     this.socks.push(sock)
