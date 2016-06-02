@@ -188,6 +188,7 @@ input[type=button]:disabled:active, button:disabled:active {
   position: fixed;
   top: 0;
   width: 25%;
+  z-index: 0;
 }
 
 .messages {
@@ -330,6 +331,7 @@ input[type=button]:disabled:active, button:disabled:active {
 #img {
   position: fixed;
   bottom: 0;
+  z-index: 1;
 }
 #img.left {
   left: 0;
