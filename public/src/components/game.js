@@ -69,7 +69,12 @@ export default React.createClass({
     let startControls = d.div({},
       d.div({}, `Format: ${App.state.format}`),
       LBox('bots', 'bots'),
-      LBox('timer', 'timer'),
+      d.div({}, d.input({
+        min: 0,
+        max: 60,
+        type: 'number',
+        valueLink: App.link('timer'),
+        }), ' second timer'))
       d.div({}, startButton, readyReminderText))
 
     return d.fieldset({ className: 'start-controls fieldset' },
