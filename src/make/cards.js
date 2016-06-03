@@ -274,7 +274,7 @@ function doCard(rawCard, cards, code, set) {
     return
 
   if (rawCard.layout === 'split')
-    name = rawCard.names.join
+    name = rawCard.names.join(' // ')
     
   //separate landsfrom 0cmc cards by setting 0cmc to .2
   var cmcadjusted = rawCard.cmc || 0.2
