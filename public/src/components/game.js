@@ -74,7 +74,7 @@ export default React.createClass({
         max: 60,
         type: 'number',
         valueLink: App.link('timer'),
-        }), ' second timer'))
+        }), ' second timer'),
       d.div({}, startButton, readyReminderText))
 
     return d.fieldset({ className: 'start-controls fieldset' },
