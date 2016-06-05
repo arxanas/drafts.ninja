@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/arxanas/drafts.ninja.png?label=ready&title=Ready)](https://waffle.io/arxanas/drafts.ninja)
 # drafts.ninja
 
 [drafts.ninja](http://drafts.ninja) is a fork of aeosynth's `draft` project. It
