@@ -1,6 +1,7 @@
 import _ from '../../lib/utils'
 import App from '../app'
 import {getZone} from '../cards'
+import {Spaced} from './spacer'
 let d = React.DOM
 
 export default React.createClass({
@@ -30,9 +31,8 @@ function zone(zoneName) {
       })))
 
   return d.div({ className: 'zone' },
-    d.h1({},
+    d.h1({}, Spaced(
       d.span({}, zoneName),
-      d.span({ className: 'spacer-dot' }),
-      d.span({}, `${cards.length} ${cards.length === 1 ? 'card' : 'cards' }`)),
+      d.span({}, `${cards.length} ${cards.length === 1 ? 'card' : 'cards' }`))),
     items)
 }
