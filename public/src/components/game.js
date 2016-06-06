@@ -69,12 +69,22 @@ export default React.createClass({
     let startControls = d.div({},
       d.div({}, `Format: ${App.state.format}`),
       LBox('bots', 'bots'),
-      d.div({}, d.input({
-        min: 0,
-        max: 60,
-        type: 'number',
-        valueLink: App.link('timer'),
-        }), ' second timer'),
+      d.div({},
+        d.label({},
+          d.input({
+            type: 'checkbox',
+            checkedLink: App.link('useTimer'),
+          }), ' use '),
+        d.label({},
+          d.input({
+            className: 'number',
+            disabled: !App.state.useTimer,
+            min: 0,
+            max: 60,
+            step: 5,
+            type: 'number',
+            valueLink: App.link('timerLength'),
+          }), '-second timer')),
       d.div({}, startButton, readyReminderText))
 
     return d.fieldset({ className: 'start-controls fieldset' },

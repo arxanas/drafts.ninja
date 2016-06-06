@@ -1,4 +1,4 @@
-const CONFIG = require('./config')
+const CONFIG = require('./config.server')
 
 var http = require('http')
 var eio = require('engine.io')

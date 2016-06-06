@@ -1,8 +1,10 @@
 import _ from '../../lib/utils'
+import {STRINGS} from '../config'
 import App from '../app'
 import data from '../data'
 import Chat from './chat'
 import {RBox} from './checkbox'
+import {Spaced} from './spacer'
 let d = React.DOM
 
 export default React.createClass({
@@ -13,32 +15,29 @@ export default React.createClass({
     App.send('join', 'lobby')
   },
   render() {
+    document.title = STRINGS.BRANDING.SITE_NAME.join('.')
+
     return d.div({ className: 'container' },
       d.div({ className: 'lobby' },
         d.header({},
           d.h1({ className: 'lobby-header' },
-            d.span({}, 'drafts'),
-            d.span({ className: 'spacer-dot' }),
-            d.span({}, 'ninja'))),
-        d.p({}, `${App.state.numUsers}
-                 ${App.state.numUsers === 1 ? 'user' : 'users'}
-                 connected;
-                 ${App.state.numPlayers}
-                 ${App.state.numPlayers === 1 ? 'player' : 'players'}
-                 playing
-                 ${App.state.numActiveGames}
-                 ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
+            Spaced(...STRINGS.BRANDING.SITE_NAME))),
+
+        d.p({},
+          Spaced(
+            `${App.state.numUsers}
+            ${App.state.numUsers === 1 ? 'user' : 'users'}
+            connected`,
+            `${App.state.numPlayers}
+            ${App.state.numPlayers === 1 ? 'player' : 'players'}
+            playing
+            ${App.state.numActiveGames}
+            ${App.state.numActiveGames === 1 ? 'game' : 'games'}`)),
         d.p({ className: 'error' }, App.err),
         Create(),
         Join(),
         Motd(),
-        d.div({},
-          d.strong({}, 'drafts.ninja'),
-          ' is a fork of the ',
-          d.code({}, 'draft'),
-          ' project by aeosynth. Contributions welcome! ',
-          d.a({ href: 'https://github.com/arxanas/drafts.ninja' },
-            'https://github.com/arxanas/drafts.ninja'))),
+        STRINGS.PAGE_SECTIONS.FOOTER),
       Chat())
   }
 })
@@ -92,10 +91,11 @@ function content() {
 }
 
 function Motd() {
-  if (App.state.motd)
+  let motd = STRINGS.PAGE_SECTIONS.MOTD
+  if (motd)
     return d.fieldset({ className: 'fieldset' },
       d.legend({ className: 'legend' }, 'News'),
-      d.div({ dangerouslySetInnerHTML: { '__html': App.state.motd } }))
+      d.div({}, motd))
 }
 
 function Create() {

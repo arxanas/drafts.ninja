@@ -31,6 +31,7 @@ module.exports = class extends EventEmitter {
     sock.on('autopick', this._autopick.bind(this))
     sock.on('pick', this._pick.bind(this))
     sock.on('hash', this._hash.bind(this))
+    sock.once('exit', this._farewell.bind(this))
 
     var [pack] = this.packs
     if (pack)
@@ -45,6 +46,10 @@ module.exports = class extends EventEmitter {
       return
 
     this.hash = hash(deck)
+    this.emit('meta')
+  }
+  _farewell() {
+    this.isConnected = false
     this.emit('meta')
   }
   _readyToStart(value) {
@@ -69,8 +74,8 @@ module.exports = class extends EventEmitter {
     if (pack.length === 1)
       return this.pick(0)
 
-    if (this.useTimer > 0)
-      this.time = parseInt(this.useTimer) + parseInt(pack.length)
+    if (this.useTimer)
+      this.time = this.timerLength + pack.length
 
     this.send('pack', pack)
   }

@@ -12,7 +12,7 @@ function Lands() {
     let inputs = BASICS.map(cardName =>
       d.td({},
         d.input({
-          className: 'num-lands',
+          className: 'number',
           min: 0,
           onChange: App._emit('land', zoneName, cardName),
           type: 'number',
@@ -27,7 +27,7 @@ function Lands() {
   let suggest = d.tr({},
     d.td({}, 'deck size'),
     d.td({}, d.input({
-      className: 'num-lands',
+      className: 'number',
       min: 0,
       onChange: App._emit('deckSize'),
       type: 'number',
