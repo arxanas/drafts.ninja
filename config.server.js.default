@@ -1,0 +1,9 @@
+module.exports = {
+  PORT: 1337,
+  MOTD: null, // message of the day
+  STRINGS: {
+    BRANDING: {
+      DEFAULT_USERNAME: 'ninja',
+    }
+  }
+}
