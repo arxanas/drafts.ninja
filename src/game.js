@@ -157,7 +157,6 @@ module.exports = class Game extends Room {
   }
 
   join(sock) {
-    sock.on('exit', this.farewell.bind(this))
     for (var i = 0; i < this.players.length; i++) {
       var p = this.players[i]
       if (p.id === sock.id) {
@@ -208,11 +207,6 @@ module.exports = class Game extends Room {
       self: this.players.indexOf(h),
       format: this.format,
     })
-  }
-
-  farewell(sock) {
-    sock.h.isConnected = false
-    this.meta()
   }
 
   exit(sock) {
