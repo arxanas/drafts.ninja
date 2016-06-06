@@ -1,4 +1,5 @@
 import _ from '../../lib/utils'
+import {STRINGS} from '../config'
 import App from '../app'
 import data from '../data'
 import Chat from './chat'
@@ -13,13 +14,18 @@ export default React.createClass({
     App.send('join', 'lobby')
   },
   render() {
+    let headerParts = []
+    for (let part of STRINGS.BRANDING.SITE_NAME) {
+      headerParts.push(d.span({}, part))
+      headerParts.push(d.span({ className: 'spacer-dot' }))
+    }
+    headerParts.splice(-1, 1)
+    document.title = STRINGS.BRANDING.SITE_NAME.join('.')
+
     return d.div({ className: 'container' },
       d.div({ className: 'lobby' },
         d.header({},
-          d.h1({ className: 'lobby-header' },
-            d.span({}, 'drafts'),
-            d.span({ className: 'spacer-dot' }),
-            d.span({}, 'ninja'))),
+          d.h1({ className: 'lobby-header' }, ...headerParts)),
         d.p({}, `${App.state.numUsers}
                  ${App.state.numUsers === 1 ? 'user' : 'users'}
                  connected;
@@ -32,13 +38,7 @@ export default React.createClass({
         Create(),
         Join(),
         Motd(),
-        d.div({},
-          d.strong({}, 'drafts.ninja'),
-          ' is a fork of the ',
-          d.code({}, 'draft'),
-          ' project by aeosynth. Contributions welcome! ',
-          d.a({ href: 'https://github.com/arxanas/drafts.ninja' },
-            'https://github.com/arxanas/drafts.ninja'))),
+        STRINGS.PAGE_SECTIONS.FOOTER),
       Chat())
   }
 })
@@ -92,10 +92,11 @@ function content() {
 }
 
 function Motd() {
-  if (App.state.motd)
+  let motd = STRINGS.PAGE_SECTIONS.MOTD
+  if (motd)
     return d.fieldset({ className: 'fieldset' },
       d.legend({ className: 'legend' }, 'News'),
-      d.div({ dangerouslySetInnerHTML: { '__html': App.state.motd } }))
+      d.div({}, motd))
 }
 
 function Create() {

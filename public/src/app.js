@@ -1,5 +1,6 @@
 import _ from '../lib/utils'
 import EventEmitter from '../lib/ee'
+import {STRINGS} from './config'
 
 function message(msg) {
   let args = JSON.parse(msg)
@@ -11,7 +12,7 @@ let App = {
 
   state: {
     id: null,
-    name: 'ninja',
+    name: STRINGS.BRANDING.DEFAULT_USERNAME,
 
     numUsers: 0,
     numPlayers: 0,
