@@ -93,8 +93,8 @@ let events = {
     App.send('readyToStart', e.target.checked)
   },
   start() {
-    let {bots, timer} = App.state
-    let options = [bots, timer]
+    let {bots, useTimer, timerLength} = App.state
+    let options = {bots, useTimer, timerLength}
     App.send('start', options)
   },
   pack(cards) {

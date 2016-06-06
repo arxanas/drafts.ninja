@@ -35,7 +35,8 @@ let App = {
     packs: 3,
 
     bots: true,
-    timer: 40,
+    useTimer: true,
+    timerLength: 40, // seconds
 
     beep: false,
     chat: true,

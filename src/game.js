@@ -307,7 +307,7 @@ module.exports = class Game extends Room {
     this.meta()
   }
 
-  start([addBots, useTimer]) {
+  start({addBots, useTimer, timerLength}) {
     var src = this.cube ? this.cube : this.sets
     var {players} = this
     var p
@@ -329,8 +329,12 @@ module.exports = class Game extends Room {
       return
     }
 
-    for (p of players)
+    timerLength = parseInt(timerLength, 10)
+    useTimer = !Number.isNaN(timerLength) && (timerLength > 0) && useTimer
+    for (p of players) {
       p.useTimer = useTimer
+      p.timerLength = timerLength
+    }
 
     console.log(`game ${this.id} started with ${this.players.length} players and ${this.seats} seats`)
     Game.broadcastGameInfo()
