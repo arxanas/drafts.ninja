@@ -4,6 +4,7 @@ import App from '../app'
 import data from '../data'
 import Chat from './chat'
 import {RBox} from './checkbox'
+import {Spaced} from './spacer'
 let d = React.DOM
 
 export default React.createClass({
@@ -14,26 +15,24 @@ export default React.createClass({
     App.send('join', 'lobby')
   },
   render() {
-    let headerParts = []
-    for (let part of STRINGS.BRANDING.SITE_NAME) {
-      headerParts.push(d.span({}, part))
-      headerParts.push(d.span({ className: 'spacer-dot' }))
-    }
-    headerParts.splice(-1, 1)
     document.title = STRINGS.BRANDING.SITE_NAME.join('.')
 
     return d.div({ className: 'container' },
       d.div({ className: 'lobby' },
         d.header({},
-          d.h1({ className: 'lobby-header' }, ...headerParts)),
-        d.p({}, `${App.state.numUsers}
-                 ${App.state.numUsers === 1 ? 'user' : 'users'}
-                 connected;
-                 ${App.state.numPlayers}
-                 ${App.state.numPlayers === 1 ? 'player' : 'players'}
-                 playing
-                 ${App.state.numActiveGames}
-                 ${App.state.numActiveGames === 1 ? 'game' : 'games'}`),
+          d.h1({ className: 'lobby-header' },
+            Spaced(...STRINGS.BRANDING.SITE_NAME))),
+
+        d.p({},
+          Spaced(
+            `${App.state.numUsers}
+            ${App.state.numUsers === 1 ? 'user' : 'users'}
+            connected`,
+            `${App.state.numPlayers}
+            ${App.state.numPlayers === 1 ? 'player' : 'players'}
+            playing
+            ${App.state.numActiveGames}
+            ${App.state.numActiveGames === 1 ? 'game' : 'games'}`)),
         d.p({ className: 'error' }, App.err),
         Create(),
         Join(),

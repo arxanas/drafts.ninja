@@ -159,7 +159,7 @@ input[type=button]:disabled:active, button:disabled:active {
 .spacer-dot:after {
   content: "\00b7";
   display: inline-block;
-  width: 25px;
+  width: 0.75em;
   text-align: center;
 }
 
