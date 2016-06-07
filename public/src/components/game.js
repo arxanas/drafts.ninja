@@ -68,7 +68,7 @@ export default React.createClass({
 
     let startControls = d.div({},
       d.div({}, `Format: ${App.state.format}`),
-      LBox('bots', 'bots'),
+      LBox('addBots', 'bots'),
       d.div({},
         d.label({},
           d.input({
