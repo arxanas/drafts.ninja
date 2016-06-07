@@ -109,6 +109,10 @@ input[type=button]:disabled:active, button:disabled:active {
   box-shadow: 0 0 1px 0 black inset;
 }
 
+.number {
+  width: 50px;
+}
+
 /** Container of inputs that share a border. **/
 
 .connected-container, .connected-column {
@@ -159,7 +163,7 @@ input[type=button]:disabled:active, button:disabled:active {
 .spacer-dot:after {
   content: "\00b7";
   display: inline-block;
-  width: 25px;
+  width: 0.75em;
   text-align: center;
 }
 
@@ -394,10 +398,6 @@ input[type=button]:disabled:active, button:disabled:active {
 
 .game-settings {
   flex-shrink: 0;
-}
-
-.num-lands {
-  width: 50px;
 }
 
 .deck-settings tr:first-of-type {

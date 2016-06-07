@@ -1,10 +1,12 @@
 .PHONY: all install clean cards score js
-all: install clean cards score js
+all: install cards score js
 
 node := ${CURDIR}/node_modules
 all_sets := ${CURDIR}/data/AllSets.json
 traceur := ${node}/.bin/traceur
-config := config.js
+
+client_config := config.client.js
+server_config := config.server.js
 
 ${traceur}: install
 
@@ -32,14 +34,16 @@ ${all_sets}:
 	curl -so ${all_sets} https://mtgjson.com/json/AllSets.json
 
 score:
-	-node src/make score #ignore errors
+	-node src/make score
 
-js: ${traceur} ${all_sets} ${config}
+js: ${traceur} ${all_sets} ${client_config}
 	${traceur} --out public/lib/app.js public/src/init.js
 
 # "order-only" prerequisite
-${config}: | ${config}.default
+${client_config}: | ${client_config}.default
+	cp $| $@
+${server_config}: | ${server_config}.default
 	cp $| $@
 
-run: js
+run: js ${server_config}
 	node run
