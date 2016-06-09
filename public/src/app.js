@@ -35,8 +35,9 @@ let App = {
     cards: 15,
     packs: 3,
 
-    bots: true,
-    timer: true,
+    addBots: true,
+    useTimer: true,
+    timerLength: 40, // seconds
 
     beep: false,
     chat: true,

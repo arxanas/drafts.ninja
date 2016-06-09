@@ -75,7 +75,7 @@ module.exports = class extends EventEmitter {
       return this.pick(0)
 
     if (this.useTimer)
-      this.time = 20 + 5 * pack.length
+      this.time = this.timerLength + pack.length
 
     this.send('pack', pack)
   }
