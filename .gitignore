@@ -6,4 +6,5 @@ data
 public/out
 public/lib
 
-config.js
+config.client.js
+config.server.js
