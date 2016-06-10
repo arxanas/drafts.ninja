@@ -93,8 +93,8 @@ let events = {
     App.send('readyToStart', e.target.checked)
   },
   start() {
-    let {bots, timer} = App.state
-    let options = [bots, timer]
+    let {addBots, useTimer, timerLength} = App.state
+    let options = {addBots, useTimer, timerLength}
     App.send('start', options)
   },
   pack(cards) {
@@ -390,6 +390,13 @@ function Key(groups, sort) {
   return o
 }
 
+function sortLandsBeforeNonLands(lhs, rhs) {
+  let isLand = x => x.type.toLowerCase().indexOf('land') !== -1
+  let lhsIsLand = isLand(lhs)
+  let rhsIsLand = isLand(rhs)
+  return rhsIsLand - lhsIsLand
+}
+
 export function getZone(zoneName) {
   let zone = Zones[zoneName]
 
@@ -401,7 +408,7 @@ export function getZone(zoneName) {
   let {sort} = App.state
   let groups = _.group(cards, sort)
   for (let key in groups)
-    _.sort(groups[key], 'color', 'cmc', 'name')
+    _.sort(groups[key], sortLandsBeforeNonLands, 'color', 'cmc', 'name')
 
   groups = Key(groups, sort)
 

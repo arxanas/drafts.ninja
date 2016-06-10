@@ -157,7 +157,6 @@ module.exports = class Game extends Room {
   }
 
   join(sock) {
-    sock.on('exit', this.farewell.bind(this))
     for (var i = 0; i < this.players.length; i++) {
       var p = this.players[i]
       if (p.id === sock.id) {
@@ -208,11 +207,6 @@ module.exports = class Game extends Room {
       self: this.players.indexOf(h),
       format: this.format,
     })
-  }
-
-  farewell(sock) {
-    sock.h.isConnected = false
-    this.meta()
   }
 
   exit(sock) {
@@ -307,7 +301,7 @@ module.exports = class Game extends Room {
     this.meta()
   }
 
-  start([addBots, useTimer]) {
+  start({addBots, useTimer, timerLength}) {
     var src = this.cube ? this.cube : this.sets
     var {players} = this
     var p
@@ -329,8 +323,12 @@ module.exports = class Game extends Room {
       return
     }
 
-    for (p of players)
+    timerLength = parseInt(timerLength, 10)
+    useTimer = !Number.isNaN(timerLength) && (timerLength > 0) && useTimer
+    for (p of players) {
       p.useTimer = useTimer
+      p.timerLength = timerLength
+    }
 
     console.log(`game ${this.id} started with ${this.players.length} players and ${this.seats} seats`)
     Game.broadcastGameInfo()

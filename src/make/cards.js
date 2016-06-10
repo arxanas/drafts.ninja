@@ -16,7 +16,7 @@ var Sets = {}
 before()
 
 var types = ['core', 'expansion', 'commander', 'planechase', 'starter', 'un']
-var codes = ['MMA', 'VMA', 'CNS', 'TPR', 'MM2']
+var codes = ['EMA', 'MMA', 'VMA', 'CNS', 'TPR', 'MM2']
 for (var code in raw) {
   var set = raw[code]
   if (types.indexOf(set.type) > -1
@@ -75,6 +75,7 @@ function before() {
   // Each sample deck has several cards numbered 270 and higher that do not
   // appear in Magic 2015 booster packs.
   raw.M15.cards = raw.M15.cards.filter(x => parseInt(x.number) < 270)
+  raw.ORI.cards = raw.ORI.cards.filter(x => parseInt(x.number) < 273)
 
   raw.OGW.cards.find(x => x.name === 'Wastes').rarity = 'Common'
 }

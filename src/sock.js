@@ -1,4 +1,5 @@
-var {EventEmitter} = require('events')
+let {EventEmitter} = require('events')
+let {STRINGS} = require('../config.server')
 
 // All sockets currently connected to the server.
 let allSocks = []
@@ -28,7 +29,7 @@ var mixins = {
 class Sock extends EventEmitter {
   constructor(ws) {
     this.ws = ws
-    var {id='', name='ninja'} = ws.request._query
+    var {id='', name=STRINGS.BRANDING.DEFAULT_USERNAME} = ws.request._query
     this.id = id.slice(0, 25)
     this.name = name.slice(0, 15)
 

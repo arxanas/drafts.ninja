@@ -1,4 +1,4 @@
-const {MOTD} = require('../config')
+const {MOTD} = require('../config.server')
 var Game = require('./game')
 var Room = require('./room')
 var Sock = require('./sock')
