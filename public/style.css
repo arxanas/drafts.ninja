@@ -194,6 +194,7 @@ input[type=button]:disabled:active, button:disabled:active {
   flex-direction: column;
   height: 100%;
   position: fixed;
+  right: 5px;
   top: 0;
   width: 25%;
   z-index: 0;
