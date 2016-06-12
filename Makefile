@@ -1,4 +1,4 @@
-.PHONY: all install clean cards score js
+.PHONY: all install clean cards score js config
 all: install cards score js
 
 node := ${CURDIR}/node_modules
@@ -44,6 +44,7 @@ ${client_config}: | ${client_config}.default
 	cp $| $@
 ${server_config}: | ${server_config}.default
 	cp $| $@
+config: ${client_config} ${server_config}
 
 run: js ${server_config}
 	node run
