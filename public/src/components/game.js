@@ -9,8 +9,6 @@ import GameSettings from './game-settings'
 import {LBox} from './checkbox'
 let d = React.DOM
 
-const READY_TITLE_TEXT = 'The host may start the game once all users have clicked the "ready" checkbox.'
-
 export default React.createClass({
   componentWillMount() {
     App.state.players = []
@@ -51,21 +49,6 @@ export default React.createClass({
     if (App.state.didGameStart || !App.state.isHost)
       return
 
-    let numNotReady = App.state.players.filter(x => !x.isReadyToStart).length
-    let readyToStart = (numNotReady === 0)
-    let startButton
-      = readyToStart
-      ? d.button({ onClick: App._emit('start') }, 'Start game')
-      : d.button({ disabled: true, title: READY_TITLE_TEXT }, 'Start game')
-
-    let readyReminderText = ''
-    if (!readyToStart) {
-      let players = (numNotReady === 1 ? 'player' : 'players')
-      readyReminderText =
-        d.span({ style: { marginLeft: '5px' } },
-          `Waiting for ${numNotReady} ${players} to become ready...`)
-    }
-
     let startControls = d.div({},
       d.div({}, `Format: ${App.state.format}`),
       LBox('addBots', 'bots'),
@@ -85,7 +68,8 @@ export default React.createClass({
             type: 'number',
             valueLink: App.link('timerLength'),
           }), '-second timer')),
-      d.div({}, startButton, readyReminderText))
+      d.div({},
+        d.button({ onClick: App._emit('start') }, 'Start game')))
 
     return d.fieldset({ className: 'start-controls fieldset' },
       d.legend({ className: 'legend game-legend' }, 'Start game'),
@@ -102,9 +86,6 @@ export default React.createClass({
       d.th({}, 'cock'),
       d.th({}, 'mws'),
     ]
-
-    if (!App.state.didGameStart)
-      columns.push(d.th({ title: READY_TITLE_TEXT }, 'ready'))
 
     if (App.state.isHost)
       columns.push(d.th({})) // kick
@@ -145,18 +126,6 @@ function row(p, i) {
         title: 'This player is currently disconnected from the server.',
       })
 
-  let readyCheckbox
-    = i === self ? d.input({
-        checked: p.isReadyToStart,
-        onChange: App._emit('readyToStart'),
-        type: 'checkbox',
-      })
-    : d.input({
-        checked: p.isReadyToStart,
-        disabled: true,
-        type: 'checkbox',
-      })
-
   let columns = [
     d.td({}, i + 1),
     d.td({}, connectionStatusIndicator),
@@ -166,12 +135,6 @@ function row(p, i) {
     d.td({}, p.hash && p.hash.cock),
     d.td({}, p.hash && p.hash.mws),
   ]
-
-  if (!App.state.didGameStart)
-    columns.push(d.td({
-      className: 'ready',
-      title: READY_TITLE_TEXT
-    }, readyCheckbox))
 
   if (App.state.isHost)
     if (i !== self && !p.isBot)

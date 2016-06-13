@@ -89,9 +89,6 @@ let events = {
     _.download(data, filename + '.' + filetype)
     hash()
   },
-  readyToStart(e) {
-    App.send('readyToStart', e.target.checked)
-  },
   start() {
     let {addBots, useTimer, timerLength} = App.state
     let options = {addBots, useTimer, timerLength}

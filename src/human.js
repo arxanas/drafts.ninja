@@ -8,7 +8,6 @@ module.exports = class extends EventEmitter {
     Object.assign(this, {
       isBot: false,
       isConnected: false,
-      isReadyToStart: false,
       id: sock.id,
       name: sock.name,
       time: 0,
@@ -27,7 +26,6 @@ module.exports = class extends EventEmitter {
       this.sock.ws.close()
 
     sock.mixin(this)
-    sock.on('readyToStart', this._readyToStart.bind(this))
     sock.on('autopick', this._autopick.bind(this))
     sock.on('pick', this._pick.bind(this))
     sock.on('hash', this._hash.bind(this))
@@ -50,10 +48,6 @@ module.exports = class extends EventEmitter {
   }
   _farewell() {
     this.isConnected = false
-    this.emit('meta')
-  }
-  _readyToStart(value) {
-    this.isReadyToStart = value
     this.emit('meta')
   }
   _autopick(index) {
