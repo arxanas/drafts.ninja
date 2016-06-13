@@ -21,10 +21,6 @@ draft, letting you know if a player is no longer with us.
     the draft, you can kick them and the rest of their picks will be made
 automatically for them. No more abandoning the draft halfway through!
 
-  * **Ready confirmation**: Each player must mark themself as ready before the
-    game can start. If you have unresponsive players, you can kick them before
-the draft has started and get a new person.
-
   * **Suggest lands**: After agonizing over your maindeck, you don't want to
     spend a lot of time constructing your manabase. With the click of a button,
 drafts.ninja will add lands to your deck using an algorithm designed to
