@@ -1,13 +1,13 @@
 const execSync = require('child_process').execSync
 
-const RELEASE = execSync('git describe').toString().trim()
-const LOCAL_BUILD = parseInt(
-  execSync('git rev-list --count "$(git describe)..HEAD"').toString().trim(),
-  10)
+const VERSION = execSync('git describe')
+  .toString()
+  .trim()
+  .replace('-', '/')
 
 module.exports = {
   PORT: 1337,
-  VERSION: {RELEASE, LOCAL_BUILD},
+  VERSION,
   STRINGS: {
     BRANDING: {
       DEFAULT_USERNAME: 'ninja',

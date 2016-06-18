@@ -1,4 +1,4 @@
-const {MOTD} = require('../config.server')
+const {VERSION} = require('../config.server')
 var Game = require('./game')
 var Room = require('./room')
 var Sock = require('./sock')
@@ -40,5 +40,5 @@ module.exports = function (ws) {
   sock.on('create', create)
 
   Game.broadcastGameInfo()
-  sock.send('set', { motd: MOTD })
+  sock.send('set', { serverVersion: VERSION })
 }

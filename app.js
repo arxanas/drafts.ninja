@@ -16,4 +16,4 @@ var server = http.createServer(function(req, res) {
 var eioServer = eio(server).on('connection', router)
 
 require('log-timestamp')
-console.log(`Started up ${CONFIG.VERSION.RELEASE}+${CONFIG.VERSION.LOCAL_BUILD}`)
+console.log(`Started up ${CONFIG.VERSION}`)
