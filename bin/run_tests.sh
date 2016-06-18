@@ -23,9 +23,15 @@ launch_server() {
     local app_pid=$!
     trap "kill $app_pid" EXIT
 
+    local i=0
     while ! curl localhost:1337 >/dev/null; do
         echo 'Waiting for server to start...'
         sleep 1
+        i=$((i + 1))
+        if [[ "$i" -gt 10 ]]; then
+            echo 'Gave up waiting for server to start'
+            exit 1
+        fi
     done
 }
 

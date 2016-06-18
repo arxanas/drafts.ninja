@@ -1,0 +1,27 @@
+sudo: required
+dist: trusty
+
+language: node_js
+node_js:
+  - "5.11"
+
+# https://github.com/hypery2k/galenframework-cli/blob/5818336f8fd92b9333c8da61d0fd7a80e84b8155/.travis.yml#L14-L49
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sudo apt-get install unzip
+  - wget -O /tmp/chromedriver.zip 'http://chromedriver.storage.googleapis.com/2.22/chromedriver_linux64.zip' && sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+
+script:
+  - ./bin/run_tests.sh
+
+after_failure:
+  - echo 'Selenium logs:'
+  - cat selenium-debug.log
