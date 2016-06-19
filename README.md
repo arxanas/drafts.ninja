@@ -1,4 +1,4 @@
-# drafts.ninja [![Stories in Ready](https://badge.waffle.io/arxanas/drafts.ninja.png?label=ready&title=Ready)](https://waffle.io/arxanas/drafts.ninja) [![Gitter chat](https://badges.gitter.im/arxanas/drafts.ninja.png)](https://gitter.im/arxanas/drafts.ninja)
+# drafts.ninja [![Build Status](https://travis-ci.org/arxanas/drafts.ninja.svg?branch=master)](https://travis-ci.org/arxanas/drafts.ninja) [![Stories in Ready](https://badge.waffle.io/arxanas/drafts.ninja.png?label=ready&title=Ready)](https://waffle.io/arxanas/drafts.ninja) [![Gitter chat](https://badges.gitter.im/arxanas/drafts.ninja.png)](https://gitter.im/arxanas/drafts.ninja)
 
 [drafts.ninja](http://drafts.ninja) is a fork of aeosynth's `draft` project. It
 supports all of the features of `draft` and more. Here are some of the
