@@ -22,17 +22,7 @@ export default React.createClass({
         d.header({},
           d.h1({ className: 'lobby-header' },
             Spaced(...STRINGS.BRANDING.SITE_NAME))),
-
-        d.p({},
-          Spaced(
-            `${App.state.numUsers}
-            ${App.state.numUsers === 1 ? 'user' : 'users'}
-            connected`,
-            `${App.state.numPlayers}
-            ${App.state.numPlayers === 1 ? 'player' : 'players'}
-            playing
-            ${App.state.numActiveGames}
-            ${App.state.numActiveGames === 1 ? 'game' : 'games'}`)),
+        ServerInfo(),
         d.p({ className: 'error' }, App.err),
         Create(),
         Join(),
@@ -96,6 +86,27 @@ function Motd() {
     return d.fieldset({ className: 'fieldset' },
       d.legend({ className: 'legend' }, 'News'),
       d.div({}, motd))
+}
+
+function ServerInfo() {
+  let numUsers =
+    `${App.state.numUsers}
+    ${App.state.numUsers === 1 ? 'user' : 'users'}
+    connected`
+
+  let numPlayers =
+    `${App.state.numPlayers}
+    ${App.state.numPlayers === 1 ? 'player' : 'players'}
+    playing
+    ${App.state.numActiveGames}
+    ${App.state.numActiveGames === 1 ? 'game' : 'games'}`
+
+  let serverVersion =
+    App.state.serverVersion
+    ? `Running ${App.state.serverVersion}`
+    : null
+
+  return d.p({}, Spaced(...[numUsers, numPlayers, serverVersion]))
 }
 
 function Create() {

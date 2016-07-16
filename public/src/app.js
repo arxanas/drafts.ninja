@@ -14,6 +14,7 @@ let App = {
     id: null,
     name: STRINGS.BRANDING.DEFAULT_USERNAME,
 
+    serverVersion: null,
     numUsers: 0,
     numPlayers: 0,
     numActiveGames: 0,

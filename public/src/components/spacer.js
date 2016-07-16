@@ -1,6 +1,8 @@
 let d = React.DOM
 
 export function Spaced(...elements) {
+  elements = elements.filter(x => x)
+
   let parts = []
   for (let part of elements) {
     parts.push(d.span({}, part))
