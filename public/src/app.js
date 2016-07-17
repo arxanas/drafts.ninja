@@ -25,11 +25,11 @@ let App = {
     isPrivate: false,
     type: 'draft',
     sets: [
+      'EMN',
+      'EMN',
       'SOI',
-      'SOI',
-      'SOI',
-      'SOI',
-      'SOI',
+      'EMN',
+      'EMN',
       'SOI'
     ],
     list: '',
