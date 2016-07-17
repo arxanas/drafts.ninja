@@ -26,7 +26,7 @@ function toPack(code) {
   if (mythic && !_.rand(8))
     rare = mythic
   //make small sets draftable.
-  if (size < 9 && code != 'SOI')
+  if (size < 9 && code != 'SOI' && code != 'EMN')
     size = 10
   var pack = [].concat(
     _.choose(size, common),
@@ -43,62 +43,78 @@ function toPack(code) {
         pack.push(_.choose(1, special.rare))
     else
       pack.push(_.choose(1, common))
+  if (code == 'EMN')
+    if (_.rand(8) == 0)
+      if (_.rand(5) < 1)
+        pack.push(_.choose(1, special.mythic))
+      else
+        pack.push(_.choose(1, special.rare))
+    else
+      pack.push(_.choose(1, common))
+
 
   let specialrnd
   switch (code) {
-  case 'SOI':
-    if (_.rand(106) < 38)
-      special = special.uncommon
-    else
-      special = special.common
-    break
-  case 'DGM':
-    special = _.rand(20)
-      ? special.gate
-      : special.shock
-    break
-  case 'MMA':
-    special = selectRarity(set)
-    break
-  case 'MM2':
-    special = selectRarity(set)
-    break
-  case 'VMA':
-    //http://www.wizards.com/magic/magazine/article.aspx?x=mtg/daily/arcana/1491
-    if (_.rand(53))
+    case 'EMN':
+      if (_.rand(2) < 1)
+        special = special.uncommon
+      else
+        special = special.common
+      break
+
+    case 'SOI':
+      if (_.rand(106) < 38)
+        special = special.uncommon
+      else
+        special = special.common
+      break
+    case 'DGM':
+      special = _.rand(20)
+        ? special.gate
+        : special.shock
+      break
+    case 'MMA':
       special = selectRarity(set)
-    break
-  case 'FRF':
-    special = _.rand(20)
-      ? special.common
-      : special.fetch
-    break
-  case 'ISD':
-  //http://www.mtgsalvation.com/forums/magic-fundamentals/magic-general/327956-innistrad-block-transforming-card-pack-odds?comment=4
-  //121 card sheet, 1 mythic, 12 rare (13), 42 uncommon (55), 66 common
-    specialrnd = _.rand(121)
-    if (specialrnd == 0)
-      special = special.mythic
-    else if (specialrnd < 13)
-      special = special.rare
-    else if (specialrnd < 55)
-      special = special.uncommon
-    else
-      special = special.common
-    break
-  case 'DKA':
-  //http://www.mtgsalvation.com/forums/magic-fundamentals/magic-general/327956-innistrad-block-transforming-card-pack-odds?comment=4
-  //80 card sheet, 2 mythic, 6 rare (8), 24 uncommon (32), 48 common
-    specialrnd = _.rand(80)
-    if (specialrnd <= 1)
-      special = special.mythic
-    else if (specialrnd < 8)
-      special = special.rare
-    else if (specialrnd < 32)
-      special = special.uncommon
-    else
-      special = special.common
-    break
+      break
+    case 'MM2':
+      special = selectRarity(set)
+      break
+    case 'VMA':
+    //http://www.wizards.com/magic/magazine/article.aspx?x=mtg/daily/arcana/1491
+      if (_.rand(53))
+        special = selectRarity(set)
+      break
+    case 'FRF':
+      special = _.rand(20)
+        ? special.common
+        : special.fetch
+      break
+    case 'ISD':
+    //http://www.mtgsalvation.com/forums/magic-fundamentals/magic-general/327956-innistrad-block-transforming-card-pack-odds?comment=4
+    //121 card sheet, 1 mythic, 12 rare (13), 42 uncommon (55), 66 common
+      specialrnd = _.rand(121)
+      if (specialrnd == 0)
+        special = special.mythic
+      else if (specialrnd < 13)
+        special = special.rare
+      else if (specialrnd < 55)
+        special = special.uncommon
+      else
+        special = special.common
+      break
+    case 'DKA':
+    //http://www.mtgsalvation.com/forums/magic-fundamentals/magic-general/327956-innistrad-block-transforming-card-pack-odds?comment=4
+    //80 card sheet, 2 mythic, 6 rare (8), 24 uncommon (32), 48 common
+      specialrnd = _.rand(80)
+      if (specialrnd <= 1)
+        special = special.mythic
+      else if (specialrnd < 8)
+        special = special.rare
+      else if (specialrnd < 32)
+        special = special.uncommon
+      else
+        special = special.common
+      break
   }
 
   if (special)

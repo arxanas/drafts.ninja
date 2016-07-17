@@ -49,23 +49,22 @@ function before() {
   })
 
   var card
+  for (card of raw.EMN.cards)
+    if (card.layout === 'double-faced' || card.layout === 'meld')
+      card.rarity = 'special'
   for (card of raw.SOI.cards)
     if (card.layout === 'double-faced')
       card.rarity = 'special'
-
   for (card of raw.ISD.cards)
     if (card.layout === 'double-faced')
       card.rarity = 'special'
-
   for (card of raw.DGM.cards)
     if (/Guildgate/.test(card.name))
       card.rarity = 'special'
-
   for (card of raw.CNS.cards)
     if ((card.type === 'Conspiracy')
       || /draft/.test(card.text))
       card.rarity = 'special'
-
   for (card of raw.FRF.cards)
     if (card.types[0] === 'Land'
       && (card.name !== 'Crucible of the Spirit Dragon'))
@@ -81,6 +80,39 @@ function before() {
 }
 
 function after() {
+  var {EMN} = Sets
+  EMN.special = {
+    "mythic":[
+      "gisela, the broken blade",
+      "ulrich of the krallenhorde"
+    ],
+    "rare":[
+      "voldaren pariah",
+      "docent of perfection",
+      "bruna, the fading light",
+      "hanweir garrison",
+      "hanweir battlements"
+    ],
+    "common":[
+      "ulvenwald captive",
+      "vildin-pack outcast",
+      "midnight scavengers",
+      "graf rats"
+    ],
+    "uncommon":[
+      "tangleclaw werewolf",
+      "shrill howler",
+      "conduit of storms",
+      "extricator of sin",
+      "kessig prowler",
+      "smoldering werewolf",
+      "curious homunculus",
+      "grizzled angler",
+      "lone rider",
+      "cryptolith fragment"
+    ]
+  }
+  EMN.size = 8
   var {SOI} = Sets
   SOI.special = {
     "mythic": [
