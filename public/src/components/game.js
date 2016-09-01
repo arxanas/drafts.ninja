@@ -110,8 +110,10 @@ export default React.createClass({
       columns.push(d.th({})) // kick
 
     let playersTable = d.table({ id: 'players' },
-      d.tr({}, ...columns),
-      rows)
+      d.thead({},
+        d.tr({}, ...columns)),
+      d.tbody({},
+        rows))
 
     return d.fieldset({ className: 'fieldset' },
       d.legend({ className: 'legend game-legend' }, 'Players'),

@@ -8,3 +8,9 @@ public/lib
 
 config.client.js
 config.server.js
+
+# Testing.
+reports
+tests_output
+selenium-debug.log
+bin/selenium-standalone.jar

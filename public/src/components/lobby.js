@@ -137,7 +137,10 @@ function Create() {
         }))),
     d.div({},
       'Number of players: ',
-      d.select({ valueLink: App.link('seats') }, seats)),
+      d.select({
+        id: 'num-players',
+        valueLink: App.link('seats'),
+      }, seats)),
     d.div({},
       RBox('isPrivate', 'Make room private: ')),
     d.div({},
