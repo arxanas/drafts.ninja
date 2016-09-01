@@ -299,7 +299,10 @@ function doSet(rawSet, code) {
 function doCard(rawCard, cards, code, set) {
   var rarity = rawCard.rarity.split(' ')[0].toLowerCase()
   if (rarity === 'basic')
-    return
+    if (/snow-covered/.test(rawCard.name.toLowerCase()))
+      rarity = 'special'
+    else
+      return
 
   var {name} = rawCard
   if (['double-faced', 'flip'].indexOf(rawCard.layout) > -1
