@@ -14,6 +14,7 @@ let App = {
     id: null,
     name: STRINGS.BRANDING.DEFAULT_USERNAME,
 
+    serverVersion: null,
     numUsers: 0,
     numPlayers: 0,
     numActiveGames: 0,
@@ -24,11 +25,11 @@ let App = {
     isPrivate: false,
     type: 'draft',
     sets: [
+      'EMN',
+      'EMN',
       'SOI',
-      'SOI',
-      'SOI',
-      'SOI',
-      'SOI',
+      'EMN',
+      'EMN',
       'SOI'
     ],
     list: '',
