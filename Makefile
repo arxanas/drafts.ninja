@@ -1,4 +1,4 @@
-.PHONY: all install clean cards score js config
+.PHONY: all install test clean cards score js config
 all: install config cards score js
 
 node := ${CURDIR}/node_modules
@@ -20,6 +20,9 @@ install:
 	ln -sf ${node}/traceur/bin/traceur-runtime.js public/lib
 	ln -sf ${node}/ee/ee.js public/lib
 	ln -sf ${node}/utils/utils.js public/lib
+
+test:
+	./bin/run_tests.sh
 
 clean:
 	rm -f ${all_sets}
