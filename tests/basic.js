@@ -18,7 +18,6 @@ module.exports = {
       .click('button')
       .assert.urlContains('/#g/')
       .waitForElementVisible('.start-controls', 1000)
-      .click('.ready input')
       .click('.start-controls button')
       .waitForElementVisible('.card', 1000)
       .perform((client, done) => {
