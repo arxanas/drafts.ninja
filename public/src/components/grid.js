@@ -21,7 +21,7 @@ function zone(zoneName) {
   let items = cards.map(card =>
     d.span(
       {
-        className: `card ${isAutopickable(card) ? 'autopick-card' : ''}`,
+        className: `card ${isAutopickable(card) ? 'autopick-card ' : ''} card ${card.foil ? 'foil-card ' : ''}`,
         title: isAutopickable(card) ? 'This card will be automatically picked if your time expires.' : '',
         onClick: App._emit('click', zoneName, card.name),
       },
